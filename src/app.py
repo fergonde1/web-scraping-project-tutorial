@@ -1,15 +1,19 @@
-import os
-from sqlalchemy import create_engine
-import pandas as pd
-from dotenv import load_dotenv
+import requests
+import time
+from bs4 import BeautifulSoup
 
-# load the .env file variables
-load_dotenv()
+# Seleccionar el recurso a descargar
+resource_url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue"
 
-# 1) Connect to the database here using the SQLAlchemy's create_engine function
+# Petición para descargar el fichero de Internet
+response = requests.get(resource_url, time.sleep(10))
 
-# 2) Execute the SQL sentences to create your tables using the SQLAlchemy's execute function
+# Si la petición se ha ejecutado correctamente (código 200), entonces el contenido HTML de la página se ha podido descargar
+if response:
+    # Transformamos el HTML plano en un HTML real (estructurado y anidado, con forma de árbol)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    soup
 
-# 3) Execute the SQL sentences to insert your data using the SQLAlchemy's execute function
+tables = soup.find_all("table")
+tables
 
-# 4) Use pandas to print one of the tables as dataframes using read_sql function
